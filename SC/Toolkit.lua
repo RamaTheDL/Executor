@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/RamaTheDL/Library/main/Orion/Source.lua')))()
 
 local Window = OrionLib:MakeWindow({Name = "Dev Toolkit", IntroEnabled = true, IntroText = "Toolkit", HidePremium = true, SaveConfig = false, ConfigFolder = "OrionTest"})
 
@@ -73,7 +73,7 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-Tab:AddButton({ Name = "Orion UI (This One)", Callback = function() setclipboard("https://github.com/darkkcontrol/Roblox-Orion-UI-Libary-OP-UI-LIBARY-/blob/main/Documentation.md") end})
+Tab:AddButton({ Name = "Orion UI (This One)", Callback = function() setclipboard("https://github.com/RamaTheDL/Library/main/Orion/Readme.md") end})
 Tab:AddButton({ Name = "RayField UI (Orion UI but newer)", Callback = function() setclipboard("https://rayfield.dev/en/introduction") end})
 Tab:AddButton({ Name = "Wally UI V3 (The one I use)", Callback = function() setclipboard("https://github.com/bloodball/UI-Librarys/blob/main/Wally%20UI%20v3") end})
 Tab:AddButton({ Name = "Ocerium UI", Callback = function() setclipboard("https://v3rmillion.net/showthread.php?tid=1167106") end})
