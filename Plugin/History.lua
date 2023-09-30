@@ -96,8 +96,8 @@ SendMessage(url, "")
 
 
 local embed = {
-    ["title"] = "# Notification!",
-    ["description"] = "Game History Logs",
+    ["title"] = "– Notification!",
+    ["description"] = "• Game History Logs",
     ["color"] = 000000,
     ["fields"] = {
     	{
