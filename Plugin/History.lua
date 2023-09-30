@@ -1,3 +1,4 @@
+wait(2)
 -- // Function // --
 UserInputService = game:GetService("UserInputService")
 TweenService = game:GetService("TweenService")
@@ -27,6 +28,17 @@ local Players = game:GetService("Players")
 
 local Player = game.Players.LocalPlayer
 local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/RamaTheDL/Library/main/Orion/Source.lua')))()
+	
+OrionLib:MakeNotification({
+	Name = "Notification!",
+	Content = "Succesfully saved to logs!",
+	Image = "rbxassetid://7733911828",
+	Time = 7
+})
+
+-- print(os.date("%d/%m/%y - %H:%M:%S %p"))
 
 -- // Webhook // --
 
@@ -84,13 +96,13 @@ SendMessage(url, "")
 
 
 local embed = {
-    ["title"] = "History",
-    ["description"] = "Game | Server Logs",
-    ["color"] = 65280,
+    ["title"] = "# Notification!",
+    ["description"] = "Game History Logs",
+    ["color"] = 000000,
     ["fields"] = {
     	{
             ["name"] = "Time:",
-            ["value"] = ("- ".. Player.Name)
+            ["value"] = os.date("%d/%m/%y - %H:%M:%S %p")
         },
         {
             ["name"] = "User-Name:",
