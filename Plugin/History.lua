@@ -29,7 +29,7 @@ local Players = game:GetService("Players")
 local Player = game.Players.LocalPlayer
 local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/RamaTheDL/Library/main/Orion/Source.lua')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/RamaTheDL/Library/main/Orion/Library/Source.lua')))()
 	
 OrionLib:MakeNotification({
 	Name = "Notification!",
