@@ -1,29 +1,6 @@
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/RamaTheDL/Library/main/ArrayField/Library/Source.lua'))()
+local silp = "Rama102031" or "AldiUnyumlk"
 
-local function getexploit()
-  local exploit =
-      (syn and not is_sirhurt_closure and not pebc_execute and "Synapse") or
-      (secure_load and "Sentinel") or
-      (is_sirhurt_closure and "Sirhurt") or
-      (pebc_execute and "ProtoSmasher") or
-      (KRNL_LOADED and "Krnl") or
-      (WrapGlobal and "WeAreDevs") or
-      (isvm and "Proxo") or
-      (shadow_env and "Shadow") or
-      (jit and "EasyExploits") or
-      (getscriptenvs and "Calamari") or
-      (unit and not syn and "Unit") or
-      (OXYGEN_LOADED and "Oxygen U") or
-      (IsElectron and "Electron") or
-      ("Unsupported")
-
-  return exploit
-end
-
-print(getexploit())
-
-if syn then
-	-- // Functions // --
+-- // Functions // --
 UserInputService = game:GetService("UserInputService")
 TweenService = game:GetService("TweenService")
 HttpService = game:GetService("HttpService")
@@ -52,7 +29,31 @@ local Players = game:GetService("Players")
 local Player = game.Players.LocalPlayer
 local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
 
--- // Library // --
+local function getexploit()
+  local exploit =
+      (syn and not is_sirhurt_closure and not pebc_execute and "Synapse") or
+      (secure_load and "Sentinel") or
+      (is_sirhurt_closure and "Sirhurt") or
+      (pebc_execute and "ProtoSmasher") or
+      (KRNL_LOADED and "Krnl") or
+      (WrapGlobal and "WeAreDevs") or
+      (isvm and "Proxo") or
+      (shadow_env and "Shadow") or
+      (jit and "EasyExploits") or
+      (getscriptenvs and "Calamari") or
+      (unit and not syn and "Unit") or
+      (OXYGEN_LOADED and "Oxygen U") or
+      (IsElectron and "Electron") or
+      ("Unsupported")
+
+  return exploit
+end
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/RamaTheDL/Library/main/ArrayField/Library/Source.lua'))()
+
+if Player.Name == silp then
+  if syn then
+	-- // Library // --
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/RamaTheDL/Library/main/ArrayField/Library/Source.lua'))()
 
 local Window = Rayfield:CreateWindow({
@@ -477,4 +478,5 @@ Rayfield:Notify({
 		},
 	},
 })
+  end
 end
