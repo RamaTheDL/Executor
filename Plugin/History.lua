@@ -69,7 +69,6 @@ function SendMessageEMBED(url, embed)
         ["embeds"] = {
             {
                 ["title"] = embed.title,
-                ["description"] = embed.description,
                 ["color"] = embed.color,
                 ["fields"] = embed.fields,
                 ["footer"] = {
@@ -96,8 +95,7 @@ SendMessage(url, "")
 
 
 local embed = {
-    ["title"] = "– Notification!",
-    ["description"] = "• Game History Logs",
+    ["title"] = "-- // Game History // --",
     ["color"] = 000000,
     ["fields"] = {
     	{
