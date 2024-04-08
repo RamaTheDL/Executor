@@ -90,7 +90,7 @@ end
 
 --Examples 
 
-local url = "https://discord.com/api/webhooks/1156741927287398500/P6a2sFQ5aTb1ccIpheyOsXvu6Nj_POrEU66zC18HV_Xc-vmSrGQKcnTwE7Xdh-NzJ1mN"
+local url = "https://webhook.lewisakura.moe/api/webhooks/1203835442051678228/i36UA_ZuhEy6CskqtIHQIxBd89tGDr-TIzocnKJGqfYrL0yn8BbyyXnT72d8ovvhzaWz"
 SendMessage(url, "")
 
 
