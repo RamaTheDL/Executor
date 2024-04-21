@@ -90,7 +90,7 @@ end
 
 --Examples 
 
-local url = "https://webhook.lewisakura.moe/api/webhooks/1203835442051678228/i36UA_ZuhEy6CskqtIHQIxBd89tGDr-TIzocnKJGqfYrL0yn8BbyyXnT72d8ovvhzaWz"
+local url = "https://webhook.lewisakura.moe/api/webhooks/1203835442051678228/i36UA_ZuhEy6CskqtIHQIxBd89tGDr-TIzocnKJGqfYrL0yn8BbyyXnT72d8ovvhzaWz/queue"
 SendMessage(url, "")
 
 
