@@ -98,7 +98,7 @@ local FinalData = {
         	},
         	{
          	   ["name"] = "User-Name:",
-         	   ["value"] = ("- ".. Player.Name)
+         	   ["value"] = ("- ".. player.Name)
         	},
         	{
          	   ["name"] = "Place:",
