@@ -1,124 +1,128 @@
-wait(2)
--- // Function // --
-UserInputService = game:GetService("UserInputService")
-TweenService = game:GetService("TweenService")
-HttpService = game:GetService("HttpService")
-MarketplaceService = game:GetService("MarketplaceService")
-RunService = game:GetService("RunService")
-TeleportService = game:GetService("TeleportService")
-NetworkClient = game:GetService("NetworkClient")
-ReplicatedStorage = game:GetService("ReplicatedStorage")
-StarterPlayer = game:GetService("StarterPlayer")
-InsertService = game:GetService("InsertService")
-ChatService = game:GetService("Chat")
-ProximityPromptService = game:GetService("ProximityPromptService")
-StatsService = game:GetService("Stats")
-MaterialService = game:GetService("MaterialService")
+-- Wait until the game is loaded
+wait()
 
-sethidden = sethiddenproperty or set_hidden_property or set_hidden_prop
-gethidden = gethiddenproperty or get_hidden_property or get_hidden_prop
-queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
-PlaceId, JobId = game.PlaceId, game.JobId
-local IsOnMobile = table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform())
-
-local Asset = MarketplaceService:GetProductInfo(PlaceId)
-
+-- // Services // --
 local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
 
-local Player = game.Players.LocalPlayer
-local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+-- // Variables // --
+local player = Players.LocalPlayer
+local Asset = MarketplaceService:GetProductInfo(game.PlaceId)
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/RamaTheDL/Library/main/Orion/Library/Source.lua')))()
-	
-OrionLib:MakeNotification({
-	Name = "Notification!",
-	Content = "Succesfully saved to logs!",
-	Image = "rbxassetid://7733911828",
-	Time = 7
-})
+-- Utility functions for hidden properties (if supported by the executor)
+local sethidden = sethiddenproperty or set_hidden_property or set_hidden_prop
+local gethidden = gethiddenproperty or get_hidden_property or get_hidden_prop
 
--- print(os.date("%d/%m/%y - %H:%M:%S %p"))
+-- Teleport queue function (if supported by the executor)
+local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 
--- // Webhook // --
+-- HTTP request function (if supported by the executor)
+local httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 
-function SendMessage(url, message)
-    local http = game:GetService("HttpService")
-    local headers = {
-        ["Content-Type"] = "application/json"
-    }
-    local data = {
-        ["content"] = message
-    }
-    local body = http:JSONEncode(data)
-    local response = request({
-        Url = url,
-        Method = "POST",
-        Headers = headers,
-        Body = body
-    })
-    print("SUCCCCCCCCCCCKKKKKKKKEEEEEEEEEEEEESSSSSSSSSSSSSSS")
+-- // Ensure HttpService is used for JSON decoding // --
+if not HttpService then
+    warn("HttpService is not available.")
+    return
 end
 
-function SendMessageEMBED(url, embed)
-    local http = game:GetService("HttpService")
-    local headers = {
-        ["Content-Type"] = "application/json"
-    }
-    local data = {
-        ["embeds"] = {
-            {
-                ["title"] = embed.title,
-                ["color"] = embed.color,
-                ["fields"] = embed.fields,
-                ["footer"] = {
-                    ["text"] = embed.footer.text
-                }
-            }
-        }
-    }
-    local body = http:JSONEncode(data)
-    local response = request({
-        Url = url,
-        Method = "POST",
-        Headers = headers,
-        Body = body
+-- // Get UniverseId // --
+local success, universeData = pcall(function()
+    local response = httprequest({
+        Url = "https://apis.roblox.com/universes/v1/places/" .. tostring(game.PlaceId) .. "/universe",
+        Method = "GET"
     })
-    print("yesssssssssssssssssss")
+    return HttpService:JSONDecode(response.Body)
+end)
+
+if not success then
+    warn("Failed to fetch UniverseId:", universeData)
+    return
 end
 
+-- Extract the UniverseId
+local resultUniverseId
+for key, value in pairs(universeData) do
+    if type(value) == "table" then
+        print(table.concat(value, " "))
+    else
+        resultUniverseId = tostring(value)
+    end
+end
 
---Examples 
+if not resultUniverseId then
+    warn("Failed to retrieve ResultUniverseId.")
+    return
+end
 
-local url = "https://webhook.lewisakura.moe/api/webhooks/1203835442051678228/i36UA_ZuhEy6CskqtIHQIxBd89tGDr-TIzocnKJGqfYrL0yn8BbyyXnT72d8ovvhzaWz/queue"
-SendMessage(url, "")
+-- // Get Thumbnail URL // --
+local success2, thumbnailData = pcall(function()
+    local response = httprequest({
+        Url = "https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=" .. resultUniverseId .. "&countPerUniverse=1&defaults=false&size=768x432&format=Png&isCircular=false",
+        Method = "GET"
+    })
+    return HttpService:JSONDecode(response.Body)
+end)
 
+if not success2 then
+    warn("Failed to fetch thumbnail data:", thumbnailData)
+    return
+end
 
-local embed = {
-    ["title"] = "-- // Game History // --",
-    ["color"] = 000000,
-    ["fields"] = {
-    	{
-            ["name"] = "Time:",
-            ["value"] = os.date("%d/%m/%y - %H:%M:%S %p")
-        },
-        {
-            ["name"] = "User-Name:",
-            ["value"] = ("- ".. Player.Name)
-        },
-        {
-            ["name"] = "Place:",
-            ["value"] = "- " .. Asset.Name,
-            ["inline"] = false 
-        },
-        {
-            ["name"] = "Job-Id:",
-            ["value"] = game.JobId,
-            ["inline"] = false
-        }
-    },
-    ["footer"] = {
-        ["text"] = "Credit: Rama102031"
-    }
+-- Print the thumbnail information
+if thumbnailData and thumbnailData.data then
+    for i, v in ipairs(thumbnailData.data) do
+		if v.thumbnails then
+			for j, w in ipairs(v.thumbnails) do
+				if typeof(w) == "table" then
+					print(table.concat(w, ", "))
+				else
+					print(tostring(w))
+				end
+			end
+        end
+    end
+else
+    warn("No thumbnail data found.")
+end
+
+local FinalData = {
+	["embeds"] = {{
+		-- ["thumbnail"] = {["url"] = ImageNya},
+		["title"] = "-- // Game History // --",
+		["color"] = tonumber(0xFFFFFF),
+		["fields"] = {
+    		{
+            	["name"] = "Time:",
+            	["value"] = os.date("%d/%m/%y - %H:%M:%S %p")
+        	},
+        	{
+         	   ["name"] = "User-Name:",
+         	   ["value"] = ("- ".. Player.Name)
+        	},
+        	{
+         	   ["name"] = "Place:",
+         	   ["value"] = "- " .. Asset.Name,
+         	   ["inline"] = false 
+        	},
+        	{
+                   ["name"] = "Job-Id:",
+        	   ["value"] = game.JobId,
+        	   ["inline"] = false
+        	}
+    	},
+    	["footer"] = {
+     	   ["text"] = "Credit: Rama102031"
+    	}
+	}},
 }
-SendMessageEMBED(url, embed)
+    
+-- // Webhook // --
+local response = request({
+	Url = "https://webhook.lewisakura.moe/api/webhooks/1203835442051678228/i36UA_ZuhEy6CskqtIHQIxBd89tGDr-TIzocnKJGqfYrL0yn8BbyyXnT72d8ovvhzaWz/queue",
+	Method = "POST",
+	Headers = {
+		["Content-Type"] = "application/json"
+	},
+	Body = HttpService:JSONEncode(FinalData)
+})
