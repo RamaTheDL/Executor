@@ -1,3 +1,5 @@
+-- // The Function // --
+function SendEmbed()
 wait()
 -- // Service & Exc Function // --
 local Players = game:GetService("Players")
@@ -74,37 +76,21 @@ local thumbnail = thumbnailTable.data and thumbnailTable.data[1] and thumbnailTa
 assert(thumbnail, "Thumbnail URL not found.")
 print("[INFO]: Thumbnail URL is " .. thumbnail)
 
--- // Embed // --
+-- // Embeds // --
 local finalData = {
 	["embeds"] = {{
         ["color"] = tonumber(0xFFFFFF),
         ["title"] = "— // Game History // —",
+        ["description"] = [[**Username:**
+- ]] .. player.Name .. [[
+
+**Join Script:**
+- game:GetService('TeleportService'):TeleportToPlaceInstance(]] ..tostring(game.PlaceId).. [[, ']] ..tostring(game.JobId).. [[', game.Players.LocalPlayer)
+# []] .. Asset.Name .. [[](https://www.roblox.com/games/]] .. game.PlaceId .. [[)]],
         ["image"] = {["url"] = thumbnail},
         ["thumbnail"] = {["url"] = icon},
-        ["fields"] = {
-            {
-                ["name"] = "User-Name:",
-                ["value"] = "- " .. player.Name,
-                ["inline"] = false
-            },
-            {
-                ["name"] = "Join Script:",
-                ["value"] = '- game:GetService("TeleportService"):TeleportToPlaceInstance(' ..tostring(game.PlaceId).. ', ' ..tostring(game.JobId).. ', game.Players.LocalPlayer)',
-                ["inline"] = false
-            },
-            {
-                ["name"] = "Hardware ID:",
-                ["value"] = '- ' .. game:GetService("RbxAnalyticsService"):GetClientId(),
-                ["inline"] = false
-            },
-            {
-                ["name"] = Asset.Name,
-                ["value"] = "",
-                ["inline"] = false
-            }
-        },
         ["footer"] = {
-            ["text"] = "Credit: Rama102031 | " .. os.date("%d/%m/%y - %H:%M:%S %p")
+            ["text"] = "Creator: Rama102031 | " .. os.date("%d/%m/%y - %H:%M:%S %p")
         }
     }}
 }
@@ -122,3 +108,15 @@ local response = httprequest({
 
 assert(response, "Failed to send webhook request.")
 print("[INFO]: Webhook sent successfully.")
+end
+
+-- // pcall() // --
+local succes, response = pcall(function()
+	SendEmbed()
+end)
+if succes then
+	-- Succes !
+else
+	warn("Trying ..", response)
+	SendEmbed()
+end
